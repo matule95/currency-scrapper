@@ -1,0 +1,16 @@
+{
+  "name": "currency-scrapper",
+  "version": "1.0.0",
+  "description": "A Web Scraper to fetch currencies from Mozambican Banks",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "Clayton Matule",
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer": "^8.0.0"
+  }
+}
