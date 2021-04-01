@@ -13,7 +13,7 @@ const scraperObject = {
                     currency.sell = parseFloat(el.querySelector('span.float-right.sell').innerText.replace(/,/, '.'))
                     return currency
                 })
-                return values
+                return values.sort((a,b) => a.currency.localeCompare(b.currency))
             }).catch((err) => reject(err))
             const sanitizedObject = {
                 bankName: 'BIM - Banco Internacional de Moçambique, S.A.',
