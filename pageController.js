@@ -2,23 +2,22 @@ const milleniumBim = require('./scrapers/milleniumBim');
 const bancoUnico = require('./scrapers/bancoUnico')
 const standardBank = require('./scrapers/standardBank')
 const bci = require('./scrapers/bci')
+const fnb = require('./scrapers/fnb')
 async function scrapeAll(browserInstance){
     let browser;
     try{
         browser = await browserInstance;
-        bci.executeScrapper(browser).then((payload) => {
-            console.log(payload)
+        const scrappers = []
+        scrappers.push(bci.executeScrapper(browser))
+        scrappers.push(milleniumBim.executeScrapper(browser))
+        scrappers.push(bancoUnico.executeScrapper(browser))
+        scrappers.push(standardBank.executeScrapper(browser))
+        scrappers.push(fnb.executeScrapper(browser))
+        Promise.all(scrappers).then((data) => {
+            Object.values(data).forEach((obj) => {
+                console.log(obj)
+            })
         })
-        milleniumBim.executeScrapper(browser).then((payload) => {
-            console.log(payload)
-        })
-        bancoUnico.executeScrapper(browser).then((payload) => {
-            console.log(payload)
-        })
-        standardBank.executeScrapper(browser).then((payload) => {
-            console.log(payload)
-        })
-
     }
     catch(err){
         console.log("Could not resolve the browser instance => ", err);
