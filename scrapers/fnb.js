@@ -3,6 +3,7 @@ const scraperObject = {
   async executeScrapper(browser) {
     const fnbPromise = new Promise(async (resolve, reject) => {
       let page = await browser.newPage();
+      await page.setDefaultNavigationTimeout(0);
       await page.goto(this.url).catch((err) => reject(err));
       await page.waitForSelector("div#cambiosGrid").then(async (data) => {
         let currencies = await page.$$eval(
