@@ -5,6 +5,7 @@ const bci = require("./scrapers/bci");
 const fnb = require("./scrapers/fnb");
 const firstCapitalBank = require("./scrapers/firstCapitalBank");
 const moza = require("./scrapers/mozaBanco");
+const bancoMocambique = require("./scrapers/bancoMocambique");
 async function scrapeAll(browserInstance) {
   let browser;
   try {
@@ -17,6 +18,7 @@ async function scrapeAll(browserInstance) {
     scrappers.push(fnb.executeScrapper(browser));
     scrappers.push(firstCapitalBank.executeScrapper(browser));
     scrappers.push(moza.executeScrapper(browser));
+    scrappers.push(bancoMocambique.executeScrapper(browser));
     Promise.all(scrappers).then((data) => {
       Object.values(data).forEach((obj) => {
         console.log(obj);
