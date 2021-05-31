@@ -39,7 +39,7 @@ const scraperObject = {
               });
               return {
                 bankName: "First Capital Bank - Moçambique",
-                htmlElements: currenciesArray,
+                currencies: currenciesArray,
               };
             }
           );
