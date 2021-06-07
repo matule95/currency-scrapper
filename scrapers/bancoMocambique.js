@@ -1,5 +1,6 @@
 const scraperObject = {
   url: "https://www.bancomoc.mz/",
+  scrapperName: "bancoMocambique",
   async executeScrapper(browser) {
     const bancoMocambique = new Promise(async (resolve, reject) => {
       let page = await browser.newPage();
@@ -45,7 +46,8 @@ const scraperObject = {
             }
           );
           return resolve(currencies);
-        });
+        })
+        .catch((error) => reject(error));
     });
     return bancoMocambique;
   },

@@ -1,5 +1,6 @@
 const scraperObject = {
   url: "https://millenniumbim.co.mz/pt/particulares",
+  scrapperName: "milleniumBim",
   async executeScrapper(browser) {
     const milleniumPromise = new Promise(async (resolve, reject) => {
       let page = await browser.newPage();

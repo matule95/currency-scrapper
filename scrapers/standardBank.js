@@ -1,5 +1,6 @@
 const scraperObject = {
   url: "https://www.standardbank.co.mz/",
+  scrapperName: "standardBank",
   async executeScrapper(browser) {
     const unicoPromise = new Promise(async (resolve, reject) => {
       let page = await browser.newPage();
@@ -42,7 +43,7 @@ const scraperObject = {
         currencies,
       };
       return resolve(sanitizedObject);
-    });
+    }).catch((error) => reject(error));
     return unicoPromise;
   },
 };

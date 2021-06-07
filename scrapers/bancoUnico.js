@@ -1,5 +1,6 @@
 const scraperObject = {
   url: "https://www.bancounico.co.mz/",
+  scrapperName: "bancoUnico",
   async executeScrapper(browser) {
     const unicoPromise = new Promise(async (resolve, reject) => {
       let page = await browser.newPage();

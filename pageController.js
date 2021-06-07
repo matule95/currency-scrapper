@@ -6,26 +6,41 @@ const fnb = require("./scrapers/fnb");
 const firstCapitalBank = require("./scrapers/firstCapitalBank");
 const moza = require("./scrapers/mozaBanco");
 const bancoMocambique = require("./scrapers/bancoMocambique");
+const { updateDatabase } = require("./firebaseOperations");
+const { dispatch } = require("./logger");
 async function scrapeAll(browserInstance) {
+  dispatch("Scrapping the Web for Currencies...");
   let browser;
   try {
     browser = await browserInstance;
-    const scrappers = [];
-    scrappers.push(bci.executeScrapper(browser));
-    scrappers.push(milleniumBim.executeScrapper(browser));
-    scrappers.push(bancoUnico.executeScrapper(browser));
-    scrappers.push(standardBank.executeScrapper(browser));
-    scrappers.push(fnb.executeScrapper(browser));
-    scrappers.push(firstCapitalBank.executeScrapper(browser));
-    scrappers.push(moza.executeScrapper(browser));
-    scrappers.push(bancoMocambique.executeScrapper(browser));
-    Promise.all(scrappers).then((data) => {
-      Object.values(data).forEach((obj) => {
-        console.log(obj);
-      });
+    const banks = [
+      milleniumBim,
+      bancoUnico,
+      standardBank,
+      bci,
+      fnb,
+      firstCapitalBank,
+    ];
+    banks.forEach((bank) => {
+      bank
+        .executeScrapper(browser)
+        .then((data) => {
+          dispatch(`Scrapped Successfully: ${bank.scrapperName}`);
+          updateDatabase(
+            `/scrapperInformation/dailyInformation/${bank.scrapperName}`,
+            {
+              ...data,
+              date: new Date().toLocaleString("en-GB"),
+            }
+          );
+        })
+        .catch((error) => {
+          dispatch(`Failed to Scrappe: ${bank.scrapperName}`);
+          updateDatabase(`/scrapperErrors/${bank.scrapperName}`, error);
+        });
     });
   } catch (err) {
-    console.log("Could not resolve the browser instance => ", err);
+    dispatch(`Could not resolve the browser instance => ${err}`);
   }
 }
 

@@ -1,5 +1,6 @@
 const scraperObject = {
   url: "https://www.bci.co.mz/",
+  scrapperName: "bci",
   async executeScrapper(browser) {
     const unicoPromise = new Promise(async (resolve, reject) => {
       let page = await browser.newPage();
@@ -39,7 +40,7 @@ const scraperObject = {
           return resolve(sanitizedObject);
         })
         .catch((err) => reject(err));
-    });
+    }).catch((error) => reject(error));
     return unicoPromise;
   },
 };

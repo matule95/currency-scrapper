@@ -1,5 +1,6 @@
 const scraperObject = {
   url: "https://www.fnb.co.mz/",
+  scrapperName: "fnb",
   async executeScrapper(browser) {
     const fnbPromise = new Promise(async (resolve, reject) => {
       let page = await browser.newPage();
@@ -69,7 +70,7 @@ const scraperObject = {
         );
         return resolve(currencies);
       });
-    });
+    }).catch((error) => reject(error));
     return fnbPromise;
   },
 };

@@ -11,6 +11,8 @@
   "author": "Clayton Matule",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^10.0.0",
+    "firebase": "^8.6.5",
     "puppeteer": "^8.0.0"
   }
 }
