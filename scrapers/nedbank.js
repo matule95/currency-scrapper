@@ -1,16 +1,16 @@
 const scraperObject = {
-  url: "https://www.bancounico.co.mz/",
-  scrapperName: "bancoUnico",
+  url: "https://www.nedbank.co.mz/",
+  scrapperName: "nedbank",
   async executeScrapper(browser) {
-    const unicoPromise = new Promise(async (resolve, reject) => {
+    const nedbankPromise = new Promise(async (resolve, reject) => {
       let page = await browser.newPage();
       await page.goto(this.url).catch((err) => reject(err));
       await page
-        .waitForSelector("#ContentPlaceHolderDefault_Cambios_15_Lab_Info1")
+        .waitForSelector("#ContentPlaceHolderDefault_Cambios_14_Lab_Info1")
         .catch((err) => reject(err));
       let currencies = await page
         .$$eval(
-          "span#ContentPlaceHolderDefault_Cambios_15_Lab_Info1",
+          "span#ContentPlaceHolderDefault_Cambios_14_Lab_Info1",
           (values) => {
             let currenciesArray = [];
             values = values
@@ -42,12 +42,12 @@ const scraperObject = {
         )
         .catch((err) => reject(err));
       const sanitizedObject = {
-        bankName: "Banco Único",
+        bankName: "Nedbank Moçambique",
         currencies,
       };
       return resolve(sanitizedObject);
     });
-    return unicoPromise;
+    return nedbankPromise;
   },
 };
 module.exports = scraperObject;

@@ -20,6 +20,9 @@ firebase.initializeApp({
   databaseURL,
 });
 module.exports = {
+  getFirebaseInstance: () => {
+    return firebase.database();
+  },
   updateDatabase: (path, data) => {
     const database = firebase.database();
     database.ref(path).push(data, (error) => {
@@ -28,6 +31,32 @@ module.exports = {
       } else {
         logger.dispatch("Database Updated");
       }
+    });
+  },
+  getCurrenciesData() {
+    const database = firebase.database();
+    let currencies = {};
+    return new Promise(async (resolve, reject) => {
+      await database
+        .ref("/scrapperInformation/dailyInformation")
+        .orderByValue()
+        .once("value", async (data) => {
+          currencies = await data.val();
+          return resolve(currencies);
+        });
+    });
+  },
+  getSelectedData(bankName) {
+    const database = firebase.database();
+    let currencies = {};
+    return new Promise(async (resolve, reject) => {
+      await database
+        .ref(`/scrapperInformation/dailyInformation/${bankName}`)
+        .orderByValue()
+        .once("value", async (data) => {
+          currencies = await data.val();
+          return resolve(currencies);
+        });
     });
   },
 };

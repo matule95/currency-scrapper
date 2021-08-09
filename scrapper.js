@@ -5,6 +5,7 @@ const browserObject = require("./browser");
 const scraperController = require("./pageController");
 let browserInstance = browserObject.startBrowser();
 module.exports = {
-  initializeScrapper: () =>
-    setInterval(() => scraperController(browserInstance), 60000),
+  // initializeScrapper: () =>
+  //   setInterval(() => scraperController(browserInstance), 60000),
+  initializeScrapper: () => scraperController(browserInstance),
 };

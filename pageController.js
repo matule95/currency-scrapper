@@ -1,5 +1,5 @@
 const milleniumBim = require("./scrapers/milleniumBim");
-const bancoUnico = require("./scrapers/bancoUnico");
+const nedbank = require("./scrapers/nedbank");
 const standardBank = require("./scrapers/standardBank");
 const bci = require("./scrapers/bci");
 const fnb = require("./scrapers/fnb");
@@ -15,17 +15,20 @@ async function scrapeAll(browserInstance) {
     browser = await browserInstance;
     const banks = [
       milleniumBim,
-      bancoUnico,
+      nedbank,
       standardBank,
       bci,
       fnb,
       firstCapitalBank,
+      moza,
+      bancoMocambique,
     ];
     banks.forEach((bank) => {
       bank
         .executeScrapper(browser)
         .then((data) => {
           dispatch(`Scrapped Successfully: ${bank.scrapperName}`);
+          console.log(data);
           updateDatabase(
             `/scrapperInformation/dailyInformation/${bank.scrapperName}`,
             {
@@ -36,7 +39,8 @@ async function scrapeAll(browserInstance) {
         })
         .catch((error) => {
           dispatch(`Failed to Scrappe: ${bank.scrapperName}`);
-          updateDatabase(`/scrapperErrors/${bank.scrapperName}`, error);
+          console.log(error);
+          // updateDatabase(`/scrapperErrors/${bank.scrapperName}`, { error });
         });
     });
   } catch (err) {
