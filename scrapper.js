@@ -8,7 +8,7 @@ let browserInstance = browserObject.startBrowser();
 module.exports = {
   // initializeScrapper: () => scraperController(browserInstance),
   initializeScrapper: () => {
-    cronJob.schedule("* * * * *", function () {
+    cronJob.schedule("0 */4 * * *", function () {
       scraperController(browserInstance);
     });
   },
